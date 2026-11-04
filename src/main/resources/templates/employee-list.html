@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zamestnanci</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Zamestnanci</h2>
+        <a th:href="@{/employees/create}" class="btn btn-primary">Pridať zamestnanca</a>
+    </div>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+        <tr>
+            <th>Meno</th>
+            <th>Priezvisko</th>
+            <th>Pozícia</th>
+            <th>Úväzok</th>
+            <th style="width: 1%">Akcie</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${employees}">
+            <td th:text="${e.firstName}"></td>
+            <td th:text="${e.lastName}"></td>
+            <td th:text="${e.jobTitle}"></td>
+            <td th:text="${e.fullTime != null} ? ${employmentTypes[e.fullTime]} : '-'"></td>
+            <td class="text-nowrap">
+                <a th:href="@{/employees/{id}(id=${e.id})}" class="btn btn-sm btn-outline-secondary">Detail</a>
+                <a th:href="@{/employees/{id}/edit(id=${e.id})}" class="btn btn-sm btn-outline-primary">Upraviť</a>
+                <form th:action="@{/employees/{id}/delete(id=${e.id})}" method="post" class="d-inline"
+                      onsubmit="return confirm('Naozaj chcete odstrániť tohto zamestnanca?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Odstrániť</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(employees)}">
+            <td colspan="5" class="text-center text-muted">Zatiaľ žiadni zamestnanci.</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

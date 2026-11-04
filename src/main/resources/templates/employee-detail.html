@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="sk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detail zamestnanca</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+
+    <h2 class="mb-3">Detail zamestnanca</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Meno</dt>
+                <dd class="col-sm-9" th:text="${employee.firstName}"></dd>
+
+                <dt class="col-sm-3">Priezvisko</dt>
+                <dd class="col-sm-9" th:text="${employee.lastName}"></dd>
+
+                <dt class="col-sm-3">Dátum narodenia</dt>
+                <dd class="col-sm-9" th:text="${#temporals.format(employee.birthDate, 'dd. MM. yyyy')}"></dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9" th:text="${employee.email}"></dd>
+
+                <dt class="col-sm-3">Telefón</dt>
+                <dd class="col-sm-9" th:text="${employee.phone}"></dd>
+
+                <dt class="col-sm-3">Pozícia</dt>
+                <dd class="col-sm-9" th:text="${employee.jobTitle}"></dd>
+
+                <dt class="col-sm-3">Plat</dt>
+                <dd class="col-sm-9"
+                    th:text="${employee.salary != null} ? ${#numbers.formatDecimal(employee.salary, 1, 'WHITESPACE', 0, 'COMMA')} + ' €' : '-'"></dd>
+
+                <dt class="col-sm-3">Úväzok</dt>
+                <dd class="col-sm-9"
+                    th:text="${employee.fullTime != null} ? ${employmentTypes[employee.fullTime]} : '-'"></dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a th:href="@{/employees}" class="btn btn-secondary">Späť na zoznam</a>
+            <a th:href="@{/employees/{id}/edit(id=${employee.id})}" class="btn btn-primary">Upraviť</a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
